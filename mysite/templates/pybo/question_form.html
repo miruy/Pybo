@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div>
+        <h5>질문등록</h5>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }} {# question_create함수에서 리턴한 QuestioForm의 객체로 불러온 속성데이터(subject, content)를 HTML코드로 자동생성 #}
+            <button type="submit">저장하기</button>
+        </form>
+    </div>
+
+{% endblock %}
