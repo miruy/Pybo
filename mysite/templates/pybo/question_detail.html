@@ -1,24 +1,30 @@
 {# 템플릿 태그 #}
 
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+{#{% load static %}   {# css 링크 사용을 휘한 코드 #}
+{#<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">#}
+ {# tailwind css 링크 추가 예정 #}
 
-<h1>{{ question.subject }}</h1>
-<div>{{ question.content }}</div>
+{% extends 'base.html' %}
+{% block content %}
 
-<h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <h1>{{ question.subject }}</h1>
+    <div>{{ question.content }}</div>
 
-<div>
-    <ul>
-        {% for answer in question.answer_set.all %}
-        <li>{{ answer.content }}</li>
-        {% endfor %}
-    </ul>
-</div>
+    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
 
-{# 해당 form의 question_id, content 데이터를 post형식으로 pybo라는 앱의 answer_create라는 별칭을 가진 메서드에 보내겠다. #}
-<form action="{% url 'pybo:answer_create' question.id %}" method="post">
-    {% csrf_token %}    {# form으로 전송한 데이터가 실제 웹 페이지에서 작성한 데이터인지를 판단하는 가늠자 역할, form태그 바로 밑에 필수로 작성하기, 보안 관련 항목 #}
-    <textarea name="content" id="content" rows="15"></textarea>
-    <input type="submit" value="등록">
-</form>
+    <div>
+        <ul>
+            {% for answer in question.answer_set.all %}
+            <li>{{ answer.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {# 해당 form의 question_id, content 데이터를 post형식으로 pybo라는 앱의 answer_create라는 별칭을 가진 메서드에 보내겠다. #}
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post">
+        {% csrf_token %}    {# form으로 전송한 데이터가 실제 웹 페이지에서 작성한 데이터인지를 판단하는 가늠자 역할, form태그 바로 밑에 필수로 작성하기, 보안 관련 항목 #}
+        <textarea name="content" id="content" rows="15"></textarea>
+        <input type="submit" value="등록">
+    </form>
+
+{% endblock %}

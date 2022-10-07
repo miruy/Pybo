@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {# tailwind css 링크 추가 예정 #}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <title> Hello, Pybo!</title>
+</head>
+
+<body>
+    {% block content %}
+    <!-- base.html 템플릿을 상속 받은 템플릿에서 구현한 내용 -->
+    {% endblock %}
+</body>
+
+<footer>
+
+</footer>
+
+</html>
