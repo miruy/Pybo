@@ -1,27 +1,39 @@
 {# 템플릿 태그 #}
 
-{#{% load static %}   {# css 링크 사용을 휘한 코드 #}
-{#<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">#}
- {# tailwind css 링크 추가 예정 #}
-
 {% extends 'base.html' %}
 {% block content %}
 
-    <div>
-
+    <div class="overflow-x-auto flex-col my-32 justify-center items-center">
         <!-- 질문 -->
-        <h2>{{ question.subject }}</h2>
-        <div>{{ question.content }}</div>
-        <div>{{ question.create_date }}</div>
-
+         <div tabindex="0" class="collapse w-2/4 mx-auto collapse-arrow border border-base-300 bg-base-100 rounded-box">
+              <div class="collapse-title text-xl font-medium text-center">
+                {{ question.subject }}
+              </div>
+              <div tabindex="0" class="collapse-content space-y-2">
+                <div class="px-10 py-5">{{ question.content }}</div>
+                <div class="text-center text-xs">{{ question.create_date }}</div>
+              </div>
+         </div>
 
         <!-- 답변 -->
-        <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+        <div class="w-2/4 mx-auto">
+            <div class="badge badge-primary badge-outline rounded">{{ question.answer_set.count }}개의 답변이 있습니다.</div>
 
-        {% for answer in question.answer_set.all %}
-            <div>{{ answer.content }}</div>
-            <div>{{ answer.create_date }}</div>
-        {% endfor %}
+            {% for answer in question.answer_set.all %}
+                <div class="mb-2">
+                {# if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
+                    <div class="alert alert-info shadow-lg">
+                        <div>{{ answer.content }}</div>
+                        <div>{{ answer.create_date }}</div>
+                    </div>
+{#                    <div class="alert alert-success shadow-xl">#}
+{#                        <div>{{ answer.content }}</div>#}
+{#                        <div>{{ answer.create_date }}</div>#}
+{#                    </div>#}
+                </div>
+            {% endfor %}
+        </div>
+
 
         <!-- 답변 등록 -->
         <form action="{% url 'pybo:answer_create' question.id %}" method="post">
@@ -32,6 +44,11 @@
             </div>
             <input type="submit" value="답변등록">
         </form>
+
+
+
+
+
 
     </div>
 
