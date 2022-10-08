@@ -3,47 +3,44 @@
 {% extends 'base.html' %}   {# base.html 상속 #}
 {% block content %}         {# base.html body에 들어갈 부분 #}
 
-    <div class="container my-3">
-        <table class="table">
+    <div class="overflow-x-auto flex-col my-32 justify-center items-center">
+
+        <table class="table w-3/4 rounded-2xl mx-auto mb-20 shadow-2xl text-center">
+
             <thead>
-            <tr class="table-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일</th>
-            </tr>
+              <tr>
+                <th class="text-[1rem]">번호</th>
+                <th class="text-[1rem]">제목</th>
+                <th class="text-[1rem]">작성일</th>
+              </tr>
             </thead>
+
             <tbody>
             {% if question_list %}
-            {% for question in question_list %}
-            <tr>
+                {% for question in question_list %}
+
+              <tr class="hover">
                 <td>{{ forloop.counter }}</td>
-                <td>
-                    <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
-                </td>
+                <td class="hover:text-primary"><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></td>
                 <td>{{ question.create_date }}</td>
-            </tr>
+              </tr>
+
             {% endfor %}
-            {% else %}
-            <tr>
-                <td colspan="3">질문이 없습니다.</td>
-            </tr>
-            {% endif %}
+                {% else %}
+                <tr>
+                    <td colspan="3">질문이 없습니다.</td>
+                </tr>
+                {% endif %}
             </tbody>
+
         </table>
 
-        <a href="{% url 'pybo:question_create' %}">질문 등록하기</a>
+        <div class="text-center">
+            <a href="{% url 'pybo:question_create' %}" class="btn btn-secondary text-gray-700 hover:text-white">질문 등록하기</a>
+        </div>
 
     </div>
 
-{#    {% if question_list %}  {# question_list가 있다면 #}
-{#        <ul>#}
-{#            {% for question in question_list %}#}
-{#            <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>   {# {{ 출력 태그 }} #}
-{#            {% endfor %}  {# 닫는 태그 #}
-{#        </ul>#}
-{#    {% else %}   {# question_list가 없다면 #}
-{#        <p>질문이 없습니다.</p>#}
-{#    {% endif %} {# 닫는 태그 #}
 
 {% endblock %}
 

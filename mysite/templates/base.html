@@ -1,11 +1,11 @@
-{% load static %}
+{% load static tailwind_tags %}
 <!doctype html>
 <html lang="ko">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {# tailwind css 링크 추가 예정 #}
+    {% tailwind_css %}  {# tailwindCSS 추가 #}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
     <title> Hello, Pybo!</title>

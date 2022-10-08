@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # DB관련 필요한 앱 -> migrate필요
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tailwind',  # tailwind 앱 추가
+    'theme',    # tailwind-theme 테마 앱 추가
+    'django_browser_reload',    # tailwind-django 프로젝트로 생성된 웹 페이지에 tailwindCSS를 적용하여 로딩해주는 앱 추가
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -125,3 +129,10 @@ STATICFILES_DIRS = [    # STATICFILES_DIRS 라는 리스트 변수 추가
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
