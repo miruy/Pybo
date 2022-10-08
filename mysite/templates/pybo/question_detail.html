@@ -3,7 +3,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="overflow-x-auto flex-col my-32 justify-center items-center">
+    <div class="overflow-x-auto flex-col space-y-20 my-32 justify-center items-center">
         <!-- 질문 -->
          <div tabindex="0" class="collapse w-2/4 mx-auto collapse-arrow border border-base-300 bg-base-100 rounded-box">
               <div class="collapse-title text-xl font-medium text-center">
@@ -16,17 +16,17 @@
          </div>
 
         <!-- 답변 -->
-        <div class="w-2/4 mx-auto">
-            <div class="badge badge-primary badge-outline rounded">{{ question.answer_set.count }}개의 답변이 있습니다.</div>
+        <div class="w-2/4 mx-auto space-y-4">
+            <div class="badge badge-primary badge-outline rounded w-40 h-7">{{ question.answer_set.count }}개의 답변이 있습니다.</div>
 
             {% for answer in question.answer_set.all %}
                 <div class="mb-2">
-                {# if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
-                    <div class="alert alert-info shadow-lg">
+                {# 나중에 if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
+                    <div class="alert alert-success shadow-lg">
                         <div>{{ answer.content }}</div>
                         <div>{{ answer.create_date }}</div>
                     </div>
-{#                    <div class="alert alert-success shadow-xl">#}
+{#                    <div class="alert alert-info shadow-xl">#}
 {#                        <div>{{ answer.content }}</div>#}
 {#                        <div>{{ answer.create_date }}</div>#}
 {#                    </div>#}
@@ -36,40 +36,18 @@
 
 
         <!-- 답변 등록 -->
-        <form action="{% url 'pybo:answer_create' question.id %}" method="post">
-            {% csrf_token %}
-            <div>
-                <label for="content"> 답변내용</label>
-                <textarea name="content" id="content" rows="10"></textarea>
-            </div>
-            <input type="submit" value="답변등록">
-        </form>
+        <div class="flex-col space-y-2">
+            <div class="badge badge-primary badge-outline rounded w-20 h-7 mx-48">답변 내용</div>
 
-
-
-
-
-
+            <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="text-center">
+                {% csrf_token %}
+                <div>
+                    <textarea name="content" id="content" rows="10" class="textarea textarea-secondary focus:border-secondary border-2 w-3/4"></textarea>
+                </div>
+                <input type="submit" value="답변등록" class="btn btn-secondary text-gray-700 hover:text-white">
+            </form>
+        </div>
     </div>
 
-{#    <h1>{{ question.subject }}</h1>#}
-{#    <div>{{ question.content }}</div>#}
-{##}
-{#    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>#}
-{##}
-{#    <div>#}
-{#        <ul>#}
-{#            {% for answer in question.answer_set.all %}#}
-{#            <li>{{ answer.content }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
-{#    </div>#}
-{##}
-    {# 해당 form의 question_id, content 데이터를 post형식으로 pybo라는 앱의 answer_create라는 별칭을 가진 메서드에 보내겠다. #}
-{#    <form action="{% url 'pybo:answer_create' question.id %}" method="post">#}
-{#        {% csrf_token %}    {# form으로 전송한 데이터가 실제 웹 페이지에서 작성한 데이터인지를 판단하는 가늠자 역할, form태그 바로 밑에 필수로 작성하기, 보안 관련 항목 #}
-{#        <textarea name="content" id="content" rows="15"></textarea>#}
-{#        <input type="submit" value="등록">#}
-{#    </form>#}
 
 {% endblock %}

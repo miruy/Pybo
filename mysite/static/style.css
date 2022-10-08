@@ -1,7 +1,9 @@
 textarea {
-    width:100%
+    width:100%;
+    resize:none;
 }
 
 input[type=submit] {
     margin-top:10px;
 }
+

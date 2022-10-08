@@ -1,3 +1,4 @@
+{% load static %}
 {% load static tailwind_tags %}
 <!doctype html>
 <html lang="ko">
@@ -7,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% tailwind_css %}  {# tailwindCSS 추가 #}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <style>
+        {#input,textarea:focus {#}
+        {#    border-color: yellow !important;#}
+        {#}#}
+    </style>
 
     <title> Hello, Pybo!</title>
 </head>
