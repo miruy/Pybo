@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect # render : 파이썬 데이터를 템플릿에 적용하여 html로 반환하는 함수
 from .models import Question    # model 중 Question 모델 사용
 from django.utils import timezone
-from .forms import QuestionForm
-
+from django.http import HttpResponseNotAllowed
+from .forms import QuestionForm, AnswerForm
 
 
 def index(request):
@@ -21,9 +21,22 @@ def detail(request, question_id):
 
 
 def answer_create(request, question_id):
+    """
+    pybo 답변등록
+    """
     question = get_object_or_404(Question, pk=question_id)
-    question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
-    return redirect('pybo:detail', question_id=question.id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.create_date = timezone.now()
+            answer.question = question
+            answer.save()
+            return redirect('pybo:detail', question_id=question.id)
+    else:
+        return HttpResponseNotAllowed('Only POST is possible.')
+    context = {'question': question, 'form': form}
+    return render(request, 'pybo/question_detail.html', context)
 
 
 def question_create(request):   # 질문 등록 메서드
@@ -38,3 +51,5 @@ def question_create(request):   # 질문 등록 메서드
         form = QuestionForm()   # 빈 객체를 form 변수에 대입(질문제목과 내용없음)
     context = {'form': form}    # 질문 등록 페이지로 리턴
     return render(request, 'pybo/question_form.html', context)
+
+

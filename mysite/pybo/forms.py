@@ -3,7 +3,7 @@
 
 
 from django import forms    # 폼 클래스 사용
-from pybo.models import Question
+from pybo.models import Question, Answer
 
 
 # 장고의 폼은 일반 폼(forms.Form) / 모델 폼(forms.ModelForm)로 나누어짐
@@ -23,3 +23,11 @@ class QuestionForm(forms.ModelForm):    # 모델 폼(forms.ModelForm) : 모델�
             'content': '내용',
         }
 
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['content']
+        labels = {
+            'content': '답변 내용',
+        }
