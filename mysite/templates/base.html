@@ -13,6 +13,21 @@
 </head>
 
 <body>
+
+    <!-- 네비게이션 바 -->
+    <div class="navbar bg-primary bg-opacity-80">
+      <div class="flex-1">
+        <a href="{% url 'pybo:index' %}" class="btn btn-ghost normal-case text-2xl text-white">Pybo</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal p-0 text-xl text-white">
+          <li><a>로그인</a></li>
+          <li><a>Item 2</a></li>
+          <li><a>Item 3</a></li>
+        </ul>
+      </div>
+    </div>
+
     {% block content %}
     <!-- base.html 템플릿을 상속 받은 템플릿에서 구현한 내용 -->
     {% endblock %}
