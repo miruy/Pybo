@@ -1,13 +1,64 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div>
-        <h5>질문등록</h5>
-        <form method="post">
+{#    <div>#}
+{#        <h5>질문등록</h5>#}
+{#        <form method="post">#}
+{#            {% csrf_token %}#}
+{#            {{ form.as_p }} {# question_create함수에서 리턴한 QuestioForm의 객체로 불러온 속성데이터(subject, content)를 HTML코드로 자동생성 #}
+{#            <button type="submit">저장하기</button>#}
+{#        </form>#}
+{#    </div>#}
+
+
+<div class="overflow-x-auto space-y-20 my-32 justify-center items-center">
+    <!-- 질문 등록 -->
+    <div class="space-y-6 mx-96">
+
+        <form method="post" class="flex-col">
             {% csrf_token %}
-            {{ form.as_p }} {# question_create함수에서 리턴한 QuestioForm의 객체로 불러온 속성데이터(subject, content)를 HTML코드로 자동생성 #}
-            <button type="submit">저장하기</button>
+
+            <!-- 오류표시 시작-->
+            {% if form.errors %}
+                <div class="alert alert-error shadow-lg">
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <strong>{{ field.label }}</strong>
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <!-- 오류표시 끝 -->
+
+            <div class="space-y-2 mb-14">
+                <div class="badge badge-primary badge-outline rounded w-20 h-7">제목</div>
+                <input type="text" name="subject" id="subject" class="input input-bordered focus:outline-none w-full" value="{{ form.subject.value|default_if_none:'' }}">
+            </div>
+
+
+            <div class="space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-20 h-7">내용</div>
+                <textarea name="content" id="content" rows="10" class="textarea textarea-bordered focus:outline-none">{{ form.content.value|default_if_none:'' }}</textarea>
+            </div>
+
+{#        {{ form.subject.value|default_if_none:'' }} : 오류가 발생하였을 때 기존에 입력했던 값 유지 #}
+{#        |default_if_none:'' : 폼 데이터에 값이 없을 경우 none이라는 문자열이 표시되는데 none대신 공백으로 표시하라는 의미 #}
+
+            <div class="text-center">
+                <input type="submit" value="등록" class="btn btn-secondary text-gray-700 hover:text-white">
+            </div>
         </form>
     </div>
+</div>
+
+
+
+
+
+
 
 {% endblock %}

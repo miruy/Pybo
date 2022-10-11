@@ -14,4 +14,12 @@ class QuestionForm(forms.ModelForm):    # 모델 폼(forms.ModelForm) : 모델�
     class Meta:            # 모델 폼은 이너클래스인 Meta클래스를 꼭! 함께 사용해야함
         model = Question    # 사용할 모델
         fields = ['subject', 'content']     # 사용할 속성(필드)
+        # widgets = {
+        #     'subject': forms.TextInput(attrs={'class': 'input-bordered rounded'}),
+        #     'content': forms.Textarea(attrs={'class': 'textarea textarea-bordered focus:outline-none', 'rows': 10}),
+        # }
+        labels = {
+            'subject': '제목',
+            'content': '내용',
+        }
 
