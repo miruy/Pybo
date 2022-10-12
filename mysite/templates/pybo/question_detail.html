@@ -11,6 +11,7 @@
               </div>
               <div tabindex="0" class="collapse-content space-y-2">
                 <div class="px-10 py-5">{{ question.content }}</div>
+                <div class="text-center text-xs">{{ question.author.username }}</div>
                 <div class="text-center text-xs">{{ question.create_date }}</div>
               </div>
          </div>
@@ -28,9 +29,12 @@
             {% for answer in question.answer_set.all %}
                 <div class="mb-2">
                 {# 나중에 if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
-                    <div class="alert alert-success shadow-lg">
+                    <div class="alert alert-success shadow-lg px-10">
                         <div>{{ answer.content }}</div>
-                        <div>{{ answer.create_date }}</div>
+                        <div class="text-end">
+                            <div>{{ answer.author.username }}</div>
+                            <div>{{ answer.create_date }}</div>
+                        </div>
                     </div>
 {#                    <div class="alert alert-info shadow-xl">#}
 {#                        <div>{{ answer.content }}</div>#}
@@ -54,7 +58,10 @@
                 <!-- 오류표시 끝 -->
 
                 <div>
-                    <textarea name="content" id="content" rows="10" class="textarea textarea-bordered focus:outline-none"></textarea>
+                    <textarea
+                            {% if not user.is_authenticated %} disabled {% endif %}
+                            name="content" id="content" rows="10" class="textarea textarea-bordered focus:outline-none">
+                    </textarea>
                 </div>
                 <input type="submit" value="답변등록" class="btn btn-secondary text-gray-700 hover:text-white">
             </form>
