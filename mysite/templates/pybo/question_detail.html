@@ -19,7 +19,11 @@
 
         <!-- 답변 -->
         <div class="w-2/4 mx-auto space-y-4">
-            <div class="badge badge-primary badge-outline rounded w-40 h-7 mx-5">{{ question.answer_set.count }}개의 답변이 있습니다.</div>
+
+            {% if question.answer_set.count > 0 %}
+                 <div class="badge badge-primary badge-outline rounded w-40 h-7">{{ question.answer_set.count }}개의 답변이 있습니다.</div>
+            {% endif %}
+
 
             {% for answer in question.answer_set.all %}
                 <div class="mb-2">
@@ -40,26 +44,14 @@
 
         <!-- 답변 등록 -->
         <div class="flex-col space-y-2 mx-96">
-            <div class="badge badge-primary badge-outline rounded w-20 h-7 mx-5">답변 내용</div>
+            <div class="badge badge-primary badge-outline rounded w-20 h-7">답변 내용</div>
 
             <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="text-center">
                 {% csrf_token %}
 
-                <!-- 오류 표시 시작 -->
-                {% if form.errors %}
-                    <div class="alert alert-error shadow-xl my-5 w-full">
-                    {% for field in form %}
-                        {% if field.errors %}
-                            <div>
-                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <strong>{{ field.label }}</strong>
-                                {{ field.errors }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    </div>
-                {% endif %}
-                <!-- 오류 표시 끝 -->
+                <!-- 오류표시 시작-->
+                {% include "form_errors.html" %}
+                <!-- 오류표시 끝 -->
 
                 <div>
                     <textarea name="content" id="content" rows="10" class="textarea textarea-bordered focus:outline-none"></textarea>

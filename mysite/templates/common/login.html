@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="overflow-x-auto my-32 mx-96 flex-col">
+        <form method="post" action="{% url 'common:login' %}" class="space-y-20">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-20 h-7">사용자 ID</div>
+                <input type="text" name="username" id="username" class="input input-bordered focus:outline-none w-full" value="{{ form.username.value|default_if_none:'' }}">
+            </div>
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-20 h-7">비밀번호</div>
+                <input type="password" name="password" id="password" class="input input-bordered focus:outline-none w-full" value="{{ form.password.value|default_if_none:'' }}">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-secondary text-gray-700 hover:text-white">로그인</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

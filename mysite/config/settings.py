@@ -31,9 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'pybo.apps.PyboConfig', # pybo앱을 설치앱 목록에 추가하여 테이블 생성 준비
-    'django.contrib.admin', # DB관련 필요한 앱 -> migrate필요
-    'django.contrib.auth',  # DB관련 필요한 앱 -> migrate필요
+    'common.apps.CommonConfig',     # 로그인, 로그아웃은 전체 사이트에 공통기눙이기때문에 따로 생성
+    'pybo.apps.PyboConfig',  # pybo앱을 설치앱 목록에 추가하여 테이블 생성 준비
+    'django.contrib.admin',  # DB관련 필요한 앱 -> migrate필요
+    'django.contrib.auth',  # 로그인, 로그아웃 관련 앱
     'django.contrib.contenttypes',  # DB관련 필요한 앱 -> migrate필요
     'django.contrib.sessions',  # DB관련 필요한 앱 -> migrate필요
     'django.contrib.messages',
@@ -135,4 +136,10 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# 로그인 성공 후 이동하는 메인URL
+LOGIN_REDIRECT_URL = '/'
+
+# 로그아웃 시 이동하는 URL (default가 admin로그아웃 페이지기 때문에 변경해줘야 함)
+LOGOUT_REDIRECT_URL = '/'
 

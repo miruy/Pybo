@@ -16,16 +16,24 @@
 
     <!-- 네비게이션 바 -->
     <div class="navbar bg-primary bg-opacity-80">
-      <div class="flex-1">
-        <a href="{% url 'pybo:index' %}" class="btn btn-ghost normal-case text-2xl text-white">Pybo</a>
-      </div>
-      <div class="flex-none">
-        <ul class="menu menu-horizontal p-0 text-xl text-white">
-          <li><a>로그인</a></li>
-          <li><a>Item 2</a></li>
-          <li><a>Item 3</a></li>
-        </ul>
-      </div>
+        <div class="flex-1">
+            <a href="{% url 'pybo:index' %}" class="btn btn-ghost normal-case text-2xl text-white">Pybo</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal p-0 text-xl text-white">
+
+                <li>
+                    {% if user.is_authenticated %}      <!-- 사용자가 이미 로그인 인증되었는지 -->
+                        <a class="" href="{% url 'common:logout' %}">{{ user.username }} (logout)</a>
+                    {% else %}
+                        <a class="" href="{% url 'common:login' %}">login</a>
+                    {% endif %}
+                </li>
+
+                <li><a>Item 2</a></li>
+                <li><a>Item 3</a></li>
+            </ul>
+        </div>
     </div>
 
     {% block content %}
