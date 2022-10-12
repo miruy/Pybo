@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="overflow-x-auto my-32 mx-96">
+
+        <form method="post" action="{% url 'common:signup' %}" class="space-y-20">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-24 h-7">사용자 이름</div>
+                <input type="text" name="username" id="username" class="input input-bordered focus:outline-none w-full" value="{{ form.username.value|default_if_none:'' }}">
+            </div>
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-15 h-7">비밀번호</div>
+                <input type="password" name="password1" id="password1" class="input input-bordered focus:outline-none w-full" value="{{ form.password1.value|default_if_none:'' }}">
+            </div>
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-28 h-7">비밀번호 확인</div>
+                <input type="password" name="password2" id="password2" class="input input-bordered focus:outline-none w-full" value="{{ form.password2.value|default_if_none:'' }}">
+            </div>
+            <div class="mb-3 space-y-2">
+                <div class="badge badge-primary badge-outline rounded w-15 h-7">이메일</div>
+                <input type="email" name="email" id="email" class="input input-bordered focus:outline-none w-full" value="{{ form.email.value|default_if_none:'' }}">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-secondary text-gray-700 hover:text-white">회원가입</button>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}

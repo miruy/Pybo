@@ -23,14 +23,19 @@
             <ul class="menu menu-horizontal p-0 text-xl text-white">
 
                 <li>
-                    {% if user.is_authenticated %}      <!-- 사용자가 이미 로그인 인증되었는지 -->
-                        <a class="" href="{% url 'common:logout' %}">{{ user.username }} (logout)</a>
+                    {% if user.is_authenticated %}      <!-- 인증된 사용자라면 -->
+                        <a href="{% url 'common:logout' %}">{{ user.username }} (logout)</a>
                     {% else %}
-                        <a class="" href="{% url 'common:login' %}">login</a>
+                        <a href="{% url 'common:login' %}">login</a>
                     {% endif %}
                 </li>
 
-                <li><a>Item 2</a></li>
+                <li>
+                    {% if not user.is_authenticated %}      <!-- 인증되지 않은 사용자라면 -->
+                        <a href="{% url 'common:signup' %}">signup</a>
+                    {% endif %}
+                </li>
+
                 <li><a>Item 3</a></li>
             </ul>
         </div>
