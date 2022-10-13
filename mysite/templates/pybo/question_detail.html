@@ -63,6 +63,9 @@
 
 
             {% for answer in question.answer_set.all %}
+
+                <a id="answer_{{ answer.id }}"></a>     {# 앵커 태그 추가 : 답변등록 후 페이지 상단으로 이동안하고 답변 부분으로 페이지 이동 #}
+
                 <div class="mb-2">
                 {# 나중에 if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
                     <div class="alert alert-success shadow-lg px-10">
