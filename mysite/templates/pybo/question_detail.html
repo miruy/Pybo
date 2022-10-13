@@ -21,7 +21,19 @@
                 <div class="card-title text-xl justify-center">{{ question.subject }}</div>
                 <p class="px-10 py-5">{{ question.content }}</p>
                 <div class="text-center text-xs">{{ question.author.username }}</div>
-                <div class="text-center text-xs">{{ question.create_date }}</div>
+
+                <div class="flex justify-center text-xs">
+                    <div class="mx-2">created at</div>
+                    <div>{{ question.create_date }}</div>
+                </div>
+
+                {% if question.modify_date %}
+                    <div class="flex justify-center text-xs">
+                        <div class="mx-2">modified at</div>
+                        <div>{{ question.modify_date }}</div>
+                    </div>
+                {% endif %}
+
                 <div class="text-center text-xs">
                     {% if request.user == question.author %}
                         <a href="{% url 'pybo:question_modify' question.id  %}" class="link link-hover hover:text-primary">[수정]</a>
@@ -47,7 +59,21 @@
                         <div>{{ answer.content }}</div>
                         <div class="text-end">
                             <div>{{ answer.author.username }}</div>
-                            <div>{{ answer.create_date }}</div>
+
+                            <div class="flex flex-col items-center">
+                                <div class="flex text-sm">
+                                    <div class="mx-2">created at</div>
+                                    <div>{{ answer.create_date }}</div>
+                                </div>
+
+                                {% if answer.modify_date %}
+                                    <div class="flex text-sm">
+                                        <div class="mx-2">modified at</div>
+                                        <div>{{ answer.modify_date }}</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
 
                             <div class="text-center text-xs">
                                 {% if request.user == answer.author %}

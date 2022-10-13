@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pybo import views
+from pybo.views import base_views
 
 # from pybo import views
 
@@ -24,5 +24,5 @@ urlpatterns = [
     path('pybo/', include('pybo.urls')),
     path("__reload__/", include("django_browser_reload.urls")),     # tailwind 관련 경로 추가
     path('common/', include('common.urls')),       # common으로 시작하는 모든 경로는 common.urls.py를 참고하여 이동하게 됨
-    path('', views.index, name='index'),        # '/' 메인으로 이동하는 URL
+    path('', base_views.index, name='index'),        # '/' 메인으로 이동하는 URL
 ]
