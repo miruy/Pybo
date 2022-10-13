@@ -1,6 +1,7 @@
 {# 템플릿 태그 #}
 
 {% extends 'base.html' %}
+{% load pybo_filter %}
 {% block content %}
 
     <div class="overflow-x-auto flex-col space-y-20 my-32 justify-center items-center">
@@ -23,7 +24,7 @@
          <div class="card mx-auto w-2/4 bg-white shadow-xl rounded-2xl">
             <div class="card-body">
                 <div class="card-title text-xl justify-center">{{ question.subject }}</div>
-                <p class="px-10 py-5">{{ question.content }}</p>
+                <p class="px-10 py-5">{{ question.content|mark }}</p>
                 <div class="text-center text-xs">{{ question.author.username }}</div>
 
                 <div class="flex justify-center text-xs">
@@ -69,7 +70,7 @@
                 <div class="mb-2">
                 {# 나중에 if문 추가해서 답변 얼트 색깔 다르게 구현해보기 #}
                     <div class="alert alert-success shadow-lg px-10">
-                        <div>{{ answer.content }}</div>
+                        <div>{{ answer.content|mark }}</div>
                         <div class="text-end">
                             <div>{{ answer.author.username }}</div>
 
