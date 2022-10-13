@@ -85,3 +85,12 @@ def question_modify(request, question_id):
     context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
 
+
+@login_required(login_url='common:login')
+def question_delete(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.author:     # 로그인된 유저와 질문을 등록한 유저가 같지 않다면
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('pybo:detail', question_id=question.id)
+    question.delete()       # 로그인된 유저와 질문을 등록한 유저가 같다면 질문삭제 실행
+    return redirect('pybo:index')
