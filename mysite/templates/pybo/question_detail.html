@@ -4,17 +4,33 @@
 {% block content %}
 
     <div class="overflow-x-auto flex-col space-y-20 my-32 justify-center items-center">
+
+        <!-- 오류 메세지 표시 -->
+        {% if messages %}
+            <div class="alert alert-error shadow-xl my-3">
+                {% for message in messages %}
+                    <strong>{{ message.tags }}</strong>
+                    <ul><li>{{ message.message }}</li></ul>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <!-- 질문 -->
-         <div tabindex="0" class="collapse w-2/4 mx-auto collapse-arrow border border-base-300 bg-base-100 rounded-box">
-              <div class="collapse-title text-xl font-medium text-center">
-                {{ question.subject }}
-              </div>
-              <div tabindex="0" class="collapse-content space-y-2">
-                <div class="px-10 py-5">{{ question.content }}</div>
-                <div class="text-center text-xs">{{ question.author.username }}</div>
+         <div class="card mx-auto w-2/4 bg-white shadow-xl rounded-2xl">
+            <div class="card-body">
+                <div class="card-title text-xl justify-center">{{ question.subject }}</div>
+                <p class="px-10 py-5">{{ question.content }}</p>
+                <div class="text-center text-xs space-x-2">
+                    {{ question.author.username }}
+
+                    {% if request.user == question.author %}
+                        <a href="{% url 'pybo:question_modify' question.id  %}" class="link link-hover hover:text-primary">[질문 수정하기]</a>
+                    {% endif %}
+                </div>
                 <div class="text-center text-xs">{{ question.create_date }}</div>
-              </div>
-         </div>
+            </div>
+        </div>
+
 
 
 

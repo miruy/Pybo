@@ -8,6 +8,7 @@ from django.utils import timezone
 from .forms import QuestionForm, AnswerForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index(request):
@@ -65,4 +66,22 @@ def question_create(request):   # 질문 등록 메서드
     context = {'form': form}    # 질문 등록 페이지로 리턴
     return render(request, 'pybo/question_form.html', context)
 
+
+@login_required(login_url='common:login')
+def question_modify(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.author:     # 로그인된 유저와 질문을 등록한 유저가 같지 않다면
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('pybo:detail', question_id=question.id)
+    if request.method == "POST":    # 로그인된 유저와 질문을 등록한 유저가 같을 때 POST로 요청이 들어왔다면 수정기능 실행
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():     # 수정폼에 입력된 값이 있다면 저장
+            question = form.save(commit=False)
+            question.modify_date = timezone.now()
+            question.save()
+            return redirect('pybo:detail', question_id=question.id)
+    else:        # 로그인된 유저와 질문을 등록한 유저가 같을 때 GET으로 요청이 들어왔다면 수정폼 보여주기
+        form = QuestionForm(instance=question)
+    context = {'form': form}
+    return render(request, 'pybo/question_form.html', context)
 
