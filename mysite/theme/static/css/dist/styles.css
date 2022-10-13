@@ -1024,6 +1024,11 @@ html {
   }
 }
 
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
 .label {
   display: flex;
   -webkit-user-select: none;
@@ -1474,12 +1479,25 @@ html {
   outline-offset: 2px;
 }
 
+.btn-primary {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--p) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--p) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--pc) / var(--tw-text-opacity));
+}
+
 .btn-primary:hover, 
     .btn-primary.btn-active {
   --tw-border-opacity: 1;
   border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid hsl(var(--p));
 }
 
 .btn-secondary {
@@ -1576,6 +1594,20 @@ html {
   border-color: transparent;
   background-color: transparent;
   text-decoration-line: underline;
+}
+
+.btn-outline.btn-primary {
+  --tw-text-opacity: 1;
+  color: hsl(var(--p) / var(--tw-text-opacity));
+}
+
+.btn-outline.btn-primary:hover {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--pc) / var(--tw-text-opacity));
 }
 
 .btn-outline.btn-secondary {
@@ -1763,6 +1795,10 @@ html {
 .collapse-plus:focus:not(.collapse-close) .collapse-title:after,
 .collapse-plus:not(.collapse-close) input[type="checkbox"]:checked ~ .collapse-title:after {
   content: "−";
+}
+
+.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-primary {
+  outline: 2px solid hsl(var(--p));
 }
 
 .drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-secondary {
@@ -2376,6 +2412,14 @@ html {
 
 .w-3\/4 {
   width: 75%;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .flex-1 {

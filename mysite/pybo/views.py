@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect # render : 파이썬 데이터를 템플릿에 적용하여 html로 반환하는 함수
-from .models import Question    # model 중 Question 모델 사용
+from .models import Question, Answer    # model 중 Question, Answer 모델 사용
 from django.utils import timezone
 # from django.http import HttpResponseNotAllowed
 from .forms import QuestionForm, AnswerForm
@@ -94,3 +94,32 @@ def question_delete(request, question_id):
         return redirect('pybo:detail', question_id=question.id)
     question.delete()       # 로그인된 유저와 질문을 등록한 유저가 같다면 질문삭제 실행
     return redirect('pybo:index')
+
+
+@login_required(login_url='common:login')
+def answer_modify(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user != answer.author:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('pybo:detail', question_id=answer.question.id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modify_date = timezone.now()
+            answer.save()
+            return redirect('pybo:detail', question_id=answer.question.id)
+    else:
+        form = AnswerForm(instance=answer)
+    context = {'answer': answer, 'form': form}
+    return render(request, 'pybo/answer_form.html', context)
+
+
+@login_required(login_url='common:login')
+def answer_delete(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user != answer.author:
+        messages.error(request, '삭제권한이 없습니다')
+    else:
+        answer.delete()
+    return redirect('pybo:detail', question_id=answer.question.id)

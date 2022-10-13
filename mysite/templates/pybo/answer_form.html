@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- 답변 수정-->
+<div class="overflow-x-auto flex-col space-y-20 my-32 justify-center items-center">
+
+    <div class="flex-col space-y-2 mx-96">
+        <div class="badge badge-primary badge-outline rounded w-28 h-7">답변 내용 (수정)</div>
+
+        <form method="post" class="text-center">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+
+            <div>
+                <textarea class="textarea textarea-bordered focus:outline-none" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+            </div>
+            <input type="submit" value="수정하기" class="btn btn-secondary text-gray-700 hover:text-white">
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
